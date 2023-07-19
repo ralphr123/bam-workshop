@@ -1,0 +1,92 @@
+/* TITLE */
+h1 .rainbow {
+  font-size: 3.75rem;
+}
+
+.description {
+  width: 60vw;
+  text-align: center;
+}
+
+@media only screen and (max-width: 1250px) {
+  .description {
+    width: 95vw;
+  }
+}
+
+/* LOGOS */
+
+.logos {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+}
+
+.logos :nth-child(1) {
+  height: 6rem;
+}
+
+.logos :nth-child(2) {
+  height: 6rem;
+}
+
+.logos :nth-child(3) {
+  border-radius: 1em;
+  height: 5.5rem;
+}
+
+/* EXERCISE BUTTONS */
+.exercise-btns-title {
+  font-size: 1.1em;
+}
+
+.exercise-btns {
+  /* display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 1em; */
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  /* width: 20vw; */
+}
+
+@media only screen and (max-width: 800px) {
+  .exercise-btns {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.exercise-btns a {
+  display: flex;
+  justify-content: center;
+}
+
+.exercise-btns a div {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  font-size: 2em;
+  cursor: pointer;
+}
+
+.exercise-btns :nth-child(1) div {
+  background-color: #f25022;
+}
+
+.exercise-btns :nth-child(2) div {
+  background-color: #7fba00;
+}
+
+.exercise-btns :nth-child(3) div {
+  background-color: #00a4ef;
+}
+
+.exercise-btns :nth-child(4) div {
+  background-color: #ffb900;
+}

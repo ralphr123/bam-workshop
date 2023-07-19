@@ -1,0 +1,21 @@
+version: "3"
+services:
+  server:
+    build:
+      context: .
+      dockerfile: Dockerfile.server
+      args:
+        - PASSPHRASE=${PASSPHRASE}
+    ports:
+      - 4200:4200
+    volumes:
+      - ./src:/app/src
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    ports:
+      - 3000:3000
+    volumes:
+      - ./src/frontend:/app/src/frontend

@@ -1,33 +1,15 @@
-(() => {
-  const $pixiContainer = document.getElementById("pixi-container");
+import { Maze } from "../_lib/maze.js";
 
-  const app = new PIXI.Application({
-    background: "#1099bb",
-    resizeTo: $pixiContainer,
+(async () => {
+  const maze = new Maze({
+    mazeDimensions: 4,
+    spriteImageUrl: "https://pixijs.com/assets/bunny.png",
+    elementIdToInject: "pixi-container",
   });
 
-  $pixiContainer.appendChild(app.view);
-
-  // create a new Sprite from an image path
-  const bunny = PIXI.Sprite.from("https://pixijs.com/assets/bunny.png");
-
-  // move the sprite to the center of the screen
-  bunny.x = app.screen.width / 2;
-  bunny.y = app.screen.height / 2;
-
-  app.stage.addChild(bunny);
-
-  const targetX = bunny.x + 100;
-  const targetY = bunny.y + 100;
-
-  // animate sprite moving right and down
-  const animate = () => {
-    if (bunny.x < targetX) {
-      bunny.x += 1;
-    } else if (bunny.y < targetY) {
-      bunny.y += 1;
-    }
-  };
-
-  app.ticker.add(animate);
+  // await maze.moveSpriteX(2);
+  // await maze.moveSpriteY(1);
+  // await maze.moveSpriteX(1);
 })();
+
+// Image by <a href="https://www.freepik.com/free-vector/flat-character-animation-frames_13818858.htm#page=2&query=sprites&position=49&from_view=keyword&track=sph">Freepik</a>

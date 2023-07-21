@@ -6,6 +6,7 @@ message = os.getenv('HELLO_WORLD')
 
 app = Flask(__name__)
 
+# Allow frontend origin to make requests
 @app.after_request
 def after_request(response):
     header = response.headers

@@ -23,15 +23,12 @@ h1 .rainbow {
   gap: 2rem;
 }
 
-.logos :nth-child(1) {
+#logo-msft,
+#logo-openai {
   height: 6rem;
 }
 
-.logos :nth-child(2) {
-  height: 6rem;
-}
-
-.logos :nth-child(3) {
+#logo-td {
   border-radius: 1em;
   height: 5.5rem;
 }
@@ -42,14 +39,9 @@ h1 .rainbow {
 }
 
 .exercise-btns {
-  /* display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 1em; */
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  /* width: 20vw; */
+  gap: 1rem;
 }
 
 @media only screen and (max-width: 800px) {

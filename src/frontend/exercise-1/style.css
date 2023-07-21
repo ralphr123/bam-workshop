@@ -1,6 +1,6 @@
 #pixi-container {
-  width: 800px;
-  height: 800px;
+  width: 40vw;
+  height: 40vw;
   border-radius: 10px;
   overflow: hidden;
 }

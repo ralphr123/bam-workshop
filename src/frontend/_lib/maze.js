@@ -9,9 +9,12 @@ export class Maze {
   constructor({ mazeDimensions, spriteImageUrl, elementIdToInject }) {
     const $pixiContainer = document.getElementById(elementIdToInject);
 
+    // Clear any existing content from DOM element
+    $pixiContainer.innerHTML = "";
+
     // Initialize instance of pixi app
     this.app = new PIXI.Application({
-      background: "#1099bb",
+      background: "#ffb900",
       resizeTo: $pixiContainer,
     });
 
@@ -49,8 +52,8 @@ export class Maze {
       sprite.width = cellSize;
 
       // Move the sprite to initial position
-      sprite.x = this.spriteCoordinates.x * cellSize;
-      sprite.y = this.spriteCoordinates.y * cellSize;
+      sprite.x = Math.round(this.spriteCoordinates.x * cellSize);
+      sprite.y = Math.round(this.spriteCoordinates.y * cellSize);
 
       // Add sprite to dom
       this.app.stage.addChild(sprite);
@@ -77,6 +80,10 @@ export class Maze {
           const domCell = new PIXI.Graphics();
 
           let cellColor = "black";
+
+          if (cell === 2) {
+            cellColor = "blue";
+          }
 
           // Fill cell with correct color
           domCell.beginFill(cellColor);
@@ -106,16 +113,19 @@ export class Maze {
     try {
       return new Promise((resolve) => {
         const cellSize = this.app.view.width / this.grid.length;
-        const targetX = x * cellSize;
-        const targetY = y * cellSize;
+        const targetX = Math.round(x * cellSize);
+        const targetY = Math.round(y * cellSize);
 
+        // 27 26.19047619047619 26.19047619047619 26.19047619047619
         // Callback to animate sprite's motion
         const animateMotion = () => {
+          // console.log(this.sprite.x, this.sprite.y, targetX, targetY);
           try {
-            if (this.sprite.x < targetX) {
-              this.sprite.x += 1;
-            } else if (this.sprite.y < targetY) {
-              this.sprite.y += 1;
+            if (this.sprite.x !== targetX) {
+              // console.log("hello");
+              this.sprite.x += this.sprite.x < targetX ? 1 : -1;
+            } else if (this.sprite.y !== targetY) {
+              this.sprite.y += this.sprite.y < targetY ? 1 : -1;
             } else {
               this.app.ticker.remove(animateMotion);
               resolve();
@@ -159,5 +169,19 @@ export class Maze {
       this.spriteCoordinates.x + n,
       this.spriteCoordinates.y
     );
+  }
+
+  /**
+   * Reset sprite cooridinates
+   */
+  resetSprite() {
+    const cellSize = this.app.view.width / this.grid.length;
+
+    // Set sprite coordinates to maze entrance (starting cell)
+    this.spriteCoordinates = { x: 0, y: 1 };
+
+    // Reset coordinates on DOM
+    this.sprite.x = Math.round(this.spriteCoordinates.x * cellSize);
+    this.sprite.y = Math.round(this.spriteCoordinates.y * cellSize);
   }
 }

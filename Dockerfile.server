@@ -15,4 +15,4 @@ RUN echo $PASSPHRASE | gpg --quiet --batch --yes --passphrase-fd 0 --output=.env
 
 EXPOSE 4200
 
-CMD [ "python", "/app/src/backend/main.py"]
+CMD [ "python", "/app/src/main.py"]

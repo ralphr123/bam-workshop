@@ -1,3 +1,4 @@
+/* GENERAL */
 body {
   background-color: #1a1a1a;
   color: white;
@@ -21,6 +22,20 @@ body > div {
   gap: 1.5rem;
 }
 
+/* PLAY BUTTON FOR TESTING */
+#play-btn {
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+#play-btn img {
+  height: 2rem;
+}
+
+/* TITLES */
 h1 {
   font-size: 2.9rem;
   margin: 0;
@@ -30,6 +45,8 @@ h1 {
 a {
   text-decoration: none;
 }
+
+/* FONTS */
 
 @font-face {
   font-family: "Pixel";
@@ -55,6 +72,8 @@ a {
   font-weight: 100;
   line-height: 1.5em;
 }
+
+/* RAINBOW TEXT ANIMATION */
 
 .rainbow {
   background-image: -webkit-gradient(
@@ -199,4 +218,41 @@ a {
   100% {
     transform: translateY(100%);
   }
+}
+
+/* ROTATING ANIMATION */
+@-webkit-keyframes rotating /* Safari and Chrome */ {
+  from {
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
 }

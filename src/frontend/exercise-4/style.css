@@ -1,0 +1,19 @@
+#pixi-container {
+  width: 55vh;
+  height: 55vh;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#maze-code-plaque {
+  width: 25rem;
+  background-color: #ffb900;
+  color: black;
+  border-radius: 1rem;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  font-size: 0.75rem;
+}

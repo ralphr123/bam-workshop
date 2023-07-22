@@ -10,27 +10,22 @@
   </head>
   <body>
     <div>
+      <h2 class="pixel"><span>Exercise 2:</span> First message</h2>
+      <h3>Try your code!</h3>
       <div id="chat-box" class="dogica">
         <div>
           <div id="response-area"></div>
-          <img src="../static/image/logo-openai.png" />
+          <img id="openai-logo" src="../static/image/logo-openai.png" />
         </div>
         <div>
-          <input type="text" disabled />
+          <input type="text" placeholder="Type here..." />
           <div>
             <img id="send-btn" src="../static/assets/icons/send.svg" />
           </div>
         </div>
       </div>
-      <div id="maze-container">
-        <div id="pixi-container"></div>
-        <div id="maze-code-plaque" class="dogica"></div>
-      </div>
     </div>
-    <button id="run-tests-btn" class="dogica">
-      <img src="../static/assets/icons/play.svg" />
-      <div>Run Tests</div>
-    </button>
+    <button id="run-tests-btn" class="dogica"></button>
     <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.x/dist/pixi.min.js"></script>
     <script type="module" src="script.js"></script>
   </body>

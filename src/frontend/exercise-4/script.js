@@ -1,5 +1,6 @@
 import { callBackend } from "../_lib/callBackend.js";
 import { Maze } from "../_lib/maze.js";
+import { handleRunTests } from "../_lib/handleRunTests.js";
 
 (async () => {
   const maze = new Maze({
@@ -11,32 +12,18 @@ import { Maze } from "../_lib/maze.js";
   // Put maze code inside plaque
   document.getElementById("maze-code-plaque").innerText = maze.mazeCode;
 
-  // Handles play and reset for students
-  const $playBtn = document.getElementById("play-btn");
+  const $sendBtn = document.getElementById("send-btn");
+  const $input = document.getElementsByTagName("input")[0];
+  const $responseArea = document.getElementById("response-area");
 
-  // Save play button content
-  const _playContent = $playBtn.innerHTML;
-  const _loadingContent =
-    '<img src="../static/assets/icons/gear.svg" class="rotating" />';
-  const _resetContent =
-    '<img src="../static/assets/icons/reset.svg" /><div>Reset</div>';
+  $input.value = maze.mazeCode;
 
-  let status = "ready";
+  $sendBtn.addEventListener("click", send);
 
-  $playBtn.addEventListener("click", () => {
-    if (status === "ready") play();
-    if (status === "ended") reset();
-  });
-
-  async function play() {
-    status = "active";
-
-    // Replace play button content with rotating gear icon
-    $playBtn.innerHTML = _loadingContent;
-
+  async function send() {
     // Fetch exercise data
     const data = await callBackend({
-      path: `exercise4/${encodeURIComponent(maze.mazeCode)}`,
+      path: `/exercise4/${encodeURIComponent(maze.mazeCode)}`,
     });
 
     const instructions = data?.instructions;
@@ -45,6 +32,7 @@ import { Maze } from "../_lib/maze.js";
 
     // Follow recieved maze instructions
     for (const instruction of instructions) {
+      $responseArea.innerText += instruction + "\n";
       const instructionFragments = instruction.split(" ");
 
       if (instructionFragments.length !== 4) {
@@ -67,16 +55,7 @@ import { Maze } from "../_lib/maze.js";
           break;
       }
     }
-
-    // Restore content of play button
-    $playBtn.innerHTML = _resetContent;
-
-    status = "ended";
   }
 
-  function reset() {
-    maze.resetSprite();
-    status = "ready;";
-    $playBtn.innerHTML = _playContent;
-  }
+  handleRunTests("exercise4");
 })();

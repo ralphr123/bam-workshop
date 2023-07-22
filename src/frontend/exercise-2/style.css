@@ -1,41 +1,20 @@
 body > div {
   display: flex;
-  align-items: center;
-  gap: 3rem;
-  margin: auto 0;
-}
-
-#maze-container {
-  display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 1.5rem;
 }
 
-#pixi-container {
-  width: 55vh;
-  height: 55vh;
-  border-radius: 1rem;
-  overflow: hidden;
-}
-
-#maze-code-plaque {
-  width: 25rem;
-  background-color: #ffb900;
-  color: black;
-  border-radius: 1rem;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  font-size: 0.75rem;
+h2 span {
+  color: #f25022;
+  font-size: 2.25rem;
 }
 
 /* CHAT BOX */
 
 #chat-box {
-  border: 3px solid #ffb900;
+  border: 3px solid #f25022;
   height: 55vh;
   width: 55vh;
   border-radius: 1rem;
@@ -65,10 +44,11 @@ body > div {
   filter: brightness(0) saturate(100%) invert(60%) sepia(95%) saturate(5489%)
     hue-rotate(350deg) brightness(98%) contrast(93%);
   opacity: 0.05;
+  height: 50%;
 }
 
 #chat-box > div:nth-child(2) {
-  border-top: 3px solid #ffb900;
+  border-top: 3px solid #f25022;
   flex: 1;
   display: flex;
   align-items: center;
@@ -76,7 +56,7 @@ body > div {
 
 #chat-box > div:nth-child(2) > input {
   color: white;
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   height: 100%;
   flex: 7;
   background-color: transparent;
@@ -85,8 +65,12 @@ body > div {
   outline: none;
 }
 
+#chat-box > div:nth-child(2) > input:disabled {
+  color: gray;
+}
+
 #chat-box > div:nth-child(2) > div {
-  background-color: #ffb900;
+  background-color: #f25022;
   height: 100%;
   flex: 1;
   display: flex;
@@ -95,7 +79,7 @@ body > div {
 }
 
 #chat-box > div:nth-child(2) > div:hover {
-  background-color: #dfa402;
+  background-color: #d84c25;
   cursor: pointer;
 }
 

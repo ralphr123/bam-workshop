@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>BEX Workshop</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../static/globals.css" />
+  </head>
+  <body>
+    <div>
+      <h2 class="pixel"><span>Exercise 3:</span> Conversation + prompt</h2>
+      <h3>Try your code!</h3>
+      <div id="chat-container">
+        <div id="prompt-box">
+          <div>Prompt area</div>
+          <textarea placeholder="Type here.."></textarea>
+        </div>
+        <div id="chat-box" class="dogica">
+          <div>
+            <div id="response-area"></div>
+            <img id="openai-logo" src="../static/image/logo-openai.png" />
+          </div>
+          <div class="chat-input-container">
+            <input type="text" placeholder="Type here..." />
+            <div>
+              <img id="send-btn" src="../static/assets/icons/send.svg" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <button id="run-tests-btn" class="dogica"></button>
+    <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.x/dist/pixi.min.js"></script>
+    <script type="module" src="script.js"></script>
+  </body>
+</html>

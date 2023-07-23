@@ -24,7 +24,6 @@ class Chat:
 		)
 
 		message = res['choices'][0]['message']['content']
-
 		self.messages.append({'role': 'assistant', 'content': message})
 
 		return message

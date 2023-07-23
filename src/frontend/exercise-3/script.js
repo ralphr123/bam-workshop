@@ -5,6 +5,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
   const $inputField = document.getElementsByTagName("input")[0];
   const $sendBtn = document.getElementById("send-btn");
   const $responseArea = document.getElementById("response-area");
+  const $promptTextarea = document.getElementsByTagName("textarea")[0];
   // const $openaiLogo = document.getElementById("openai-logo");
 
   let messages = [];
@@ -34,13 +35,16 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
 
     const data = await callBackend({
       method: "POST",
-      path: "/exercise2",
+      path: "/exercise3",
       body: {
+        systemMessage: $promptTextarea.value,
         messages: messages.slice(0, -1),
       },
     });
 
     messages = data?.messages || messages;
+
+    console.log(data);
 
     // $openaiLogo.classList.remove("rotating");
     loadMessages(messages);
@@ -63,5 +67,5 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
     }
   }
 
-  handleRunTests("exercise2");
+  handleRunTests("exercise3");
 })();

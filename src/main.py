@@ -63,29 +63,26 @@ def exercise1Tests():
         return { 'success': False }
 
 # EXERCISE 2
-
-Exercise2__mem = {
-    'chat': Exercise2__Chat()
-}
     
 @app.route('/exercise2', methods=['POST'])
 def exercise2():
     try:
         data = request.get_json()
-        message = data.get('message')
+        messages = data.get('messages')
 
-        if message == None:
+        if messages == None:
             raise Exception('No message provided in request body.')
 
-        chat = Exercise2__mem['chat']
-        res = chat.sendMessage(message)
+        chat = Exercise2__Chat()
+        chat.messages = messages[:-1]
+        res = chat.sendMessage(messages[-1].get('content'))
 
         if (not isinstance(res, str)):
             raise Exception("Response is not a string. Recieved: ", res)
 
         return { 'messages': chat.messages }
     except Exception as e:
-        print(f"Error running exercise 1: {e}")
+        print(f"Error running exercise 2: {e}")
         return {}
 
 @app.route('/exercise2/run-tests')
@@ -110,17 +107,50 @@ def exercise2Tests():
         print(f"Failed exercise 1 tests: {e}")
         return { 'success': False }
 
-@app.route('/exercise3/<prompt>/<message>')
-def exercise3(prompt: str, message: str):
+# EXERCISE 3
+
+@app.route('/exercise3', methods=['POST'])
+def exercise3():
     try:
-        chat = Exercise3__Chat(prompt)
+        data = request.get_json()
+        system_msg = data.get('systemMessage')
+        messages = data.get('messages')
 
-        res = chat.sendMessage(message)
+        if system_msg == None or messages == None:
+            raise Exception('No message provided in request body.')
 
-        return { 'response': res }
+        chat = Exercise3__Chat(system_msg)
+        chat.messages += messages[:-1]
+        res = chat.sendMessage(messages[-1].get('content'))
+
+        if (not isinstance(res, str)):
+            raise Exception("Response is not a string. Recieved: ", res)
+
+        return { 'messages': chat.messages[1:] }
     except Exception as e:
-        print(f"Error running exercise 3: {e}")
+        print(f"Error running exercise 2: {e}")
         return {}
+    
+@app.route('/exercise3/run-tests')
+def exercise3Tests():
+    try:
+        randId = str(uuid4())
+
+        system_msg = f"You are a droid, and you end off every message with -{randId}"
+        chat = Exercise3__Chat(system_msg)
+
+        res = chat.sendMessage('Hello!')
+
+        if (not isinstance(res, str)):
+            raise Exception("Response is not a string. Recieved: ", res)
+
+        if (not randId in res):
+            raise Exception("Incorrect response recieved: ", res)
+
+        return { 'success': True }
+    except Exception as e:
+        print(f"Failed exercise 1 tests: {e}")
+        return { 'success': False }
 
 @app.route('/exercise4/<maze_code>')
 def exercise4(maze_code: str):

@@ -23,7 +23,11 @@ class Chat:
 			temperature=0
 		)
 
-		return res['choices'][0]['message']['content']
+		message = res['choices'][0]['message']['content']
+
+		self.messages.append({'role': 'assistant', 'content': message})
+
+		return message
 
 if __name__ == '__main__':
 	print("Exercise 2 optional test area.")

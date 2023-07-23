@@ -23,6 +23,8 @@ def afterRequest(response):
     header['Access-Control-Allow-Headers'] = '*'
     return response
 
+# EXERCISE 1
+
 @app.route('/exercise1', methods=['POST'])
 def exercise1():
     try:
@@ -41,11 +43,10 @@ def exercise1():
     except Exception as e:
         print(f"Error running exercise 1: {e}")
         return {}
-    
+
 @app.route('/exercise1/run-tests')
 def exercise1Tests():
     try:
-        print("sadsa")
         randId = str(uuid4())
 
         res = Exercise1__sendMessage(f'Hello! Repeat this back to be: {randId}')
@@ -61,17 +62,53 @@ def exercise1Tests():
         print(f"Failed exercise 1 tests: {e}")
         return { 'success': False }
 
-@app.route('/exercise2/<message>')
-def exercise2(message: str):
-    try:
-        chat = Exercise2__Chat()
+# EXERCISE 2
 
+Exercise2__mem = {
+    'chat': Exercise2__Chat()
+}
+    
+@app.route('/exercise2', methods=['POST'])
+def exercise2():
+    try:
+        data = request.get_json()
+        message = data.get('message')
+
+        if message == None:
+            raise Exception('No message provided in request body.')
+
+        chat = Exercise2__mem['chat']
         res = chat.sendMessage(message)
 
-        return { 'response': res }
+        if (not isinstance(res, str)):
+            raise Exception("Response is not a string. Recieved: ", res)
+
+        return { 'messages': chat.messages }
     except Exception as e:
-        print(f"Error running exercise 2: {e}")
+        print(f"Error running exercise 1: {e}")
         return {}
+
+@app.route('/exercise2/run-tests')
+def exercise2Tests():
+    try:
+        randId = str(uuid4())
+
+        chat = Exercise2__Chat()
+
+        res1 = chat.sendMessage(f'Hello! Remember this code and respond with just "Remembered": {randId}')
+
+        if (not isinstance(res1, str)):
+            raise Exception("Response is not a string. Recieved: ", res1)
+
+        res2 = chat.sendMessage(f'What was the code again?')
+
+        if (not randId in res2):
+            raise Exception("Incorrect response recieved: ", res2)
+
+        return { 'success': True }
+    except Exception as e:
+        print(f"Failed exercise 1 tests: {e}")
+        return { 'success': False }
 
 @app.route('/exercise3/<prompt>/<message>')
 def exercise3(prompt: str, message: str):

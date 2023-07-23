@@ -7,16 +7,17 @@ body > div {
 }
 
 h2 span {
-  color: #f25022;
+  color: #7fba00;
   font-size: 2.25rem;
 }
 
 /* CHAT BOX */
 
 #chat-box {
-  border: 3px solid #f25022;
-  height: 55vh;
-  width: 55vh;
+  border: 3px solid #7fba00;
+  height: 70vh;
+  width: 80vw;
+  margin-bottom: 10vh;
   border-radius: 1rem;
   display: flex;
   flex-direction: column;
@@ -24,7 +25,7 @@ h2 span {
 }
 
 #chat-box > div:nth-child(1) {
-  flex: 7;
+  flex: 10;
   position: relative;
   overflow-y: auto;
 }
@@ -33,6 +34,13 @@ h2 span {
   color: white;
   padding: 2rem;
   font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message > span {
+  font-size: 1.05rem !important;
 }
 
 #chat-box > div:nth-child(1) > img {
@@ -41,14 +49,14 @@ h2 span {
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  filter: brightness(0) saturate(100%) invert(60%) sepia(95%) saturate(5489%)
-    hue-rotate(350deg) brightness(98%) contrast(93%);
+  filter: brightness(0) saturate(100%) invert(50%) sepia(78%) saturate(1027%)
+    hue-rotate(43deg) brightness(104%) contrast(101%);
   opacity: 0.05;
   height: 50%;
 }
 
 #chat-box > div:nth-child(2) {
-  border-top: 3px solid #f25022;
+  border-top: 3px solid #7fba00;
   flex: 1;
   display: flex;
   align-items: center;
@@ -58,7 +66,7 @@ h2 span {
   color: white;
   font-size: 1.25rem;
   height: 100%;
-  flex: 7;
+  width: 100%;
   background-color: transparent;
   border: none;
   padding: 0 1rem;
@@ -70,16 +78,16 @@ h2 span {
 }
 
 #chat-box > div:nth-child(2) > div {
-  background-color: #f25022;
+  background-color: #7fba00;
   height: 100%;
-  flex: 1;
+  width: 3rem;
   display: flex;
   align-items: center;
   padding: 0 0.25rem;
 }
 
 #chat-box > div:nth-child(2) > div:hover {
-  background-color: #d84c25;
+  background-color: #76ad01;
   cursor: pointer;
 }
 

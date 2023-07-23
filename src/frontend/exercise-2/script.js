@@ -7,6 +7,8 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
   const $responseArea = document.getElementById("response-area");
   // const $openaiLogo = document.getElementById("openai-logo");
 
+  let messages = [];
+
   $inputField.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && $inputField.value) {
       sendMessage($inputField.value);
@@ -23,20 +25,42 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
     $inputField.disabled = true;
     // $openaiLogo.classList.add("rotating");
 
+    messages.push(
+      { role: "user", content: message },
+      { role: "assistant", content: "..." }
+    );
+
+    loadMessages(messages);
+
     const data = await callBackend({
       method: "POST",
-      path: "/exercise1",
+      path: "/exercise2",
       body: {
         message,
       },
     });
 
-    const response = data?.response || "";
+    messages = data?.messages || messages;
 
     // $openaiLogo.classList.remove("rotating");
-    $responseArea.innerText = response;
+    loadMessages(messages);
     $inputField.value = "";
     $inputField.disabled = false;
+  }
+
+  /**
+   * Load messages into response area of DOM
+   * @param {{ role: 'user' | 'assistant'; content: string; }[]} messages
+   */
+  function loadMessages(messages) {
+    $responseArea.innerHTML = "";
+    for (const { role, content } of messages) {
+      $responseArea.innerHTML += `
+        <div class="message">
+          <span>${role === "user" ? "User: " : "GPT: "}: </span> ${content}
+        </div>
+      `;
+    }
   }
 
   handleRunTests("exercise1");

@@ -14,8 +14,14 @@ class Chat:
 	def __init__(self):
 		self.messages = []
 
-	def sendMessage(self, message: str) -> str:
+	def addUserMessasge(self, message: str) -> None:
 		self.messages.append({'role': 'user', 'content': message})
+
+	def addAIMessasge(self, message: str) -> None:
+		self.messages.append({'role': 'assistant', 'content': message})
+
+	def sendMessage(self, message: str) -> str:
+		self.addUserMessasge(message)
 
 		res = openai.ChatCompletion.create(
 			model='gpt-3.5-turbo-16k',
@@ -24,7 +30,8 @@ class Chat:
 		)
 
 		message = res['choices'][0]['message']['content']
-		self.messages.append({'role': 'assistant', 'content': message})
+		
+		self.addAIMessasge(message)
 
 		return message
 

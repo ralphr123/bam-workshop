@@ -31,12 +31,14 @@ def afterRequest(response):
 @app.route('/exercise1', methods=['POST'])
 def exercise1():
     try:
+        # Get request body
         data = request.get_json()
         message = data.get('message')
 
         if message == None:
             raise Exception('No message provided in request body.')
 
+        # Initialize exercise function
         res = Exercise1__sendMessage(message)
 
         if (not isinstance(res, str)):
@@ -50,13 +52,16 @@ def exercise1():
 @app.route('/exercise1/run-tests')
 def exercise1Tests():
     try:
+        # Generate a random ID
         randId = str(uuid4())
 
+        # Send the ID to GPT using exercise function
         res = Exercise1__sendMessage(f'Hello! Repeat this back to be: {randId}')
 
         if (not isinstance(res, str)):
             raise Exception("Response is not a string. Recieved: ", res)
 
+        # If the ID is not found in the response, then the function did not work. 
         if (not randId in res):
             raise Exception("Incorrect response recieved: ", res)
 
@@ -70,6 +75,7 @@ def exercise1Tests():
 @app.route('/exercise2', methods=['POST'])
 def exercise2():
     try:
+        # Get request body
         data = request.get_json()
         messages = data.get('messages')
 
@@ -77,7 +83,15 @@ def exercise2():
             raise Exception('No message provided in request body.')
 
         chat = Exercise2__Chat()
-        chat.messages = messages[:-1]
+        
+        # Load chat history
+        for message in messages[:-1]:
+            if (message['role'] == 'assistant'):
+                chat.addAIMessasge(message['content'])
+            if (message['role'] == 'user'):
+                chat.addUserMessasge(message['content'])
+
+        # Send latest user message to GPT using exercise class
         res = chat.sendMessage(messages[-1].get('content'))
 
         if (not isinstance(res, str)):
@@ -91,17 +105,21 @@ def exercise2():
 @app.route('/exercise2/run-tests')
 def exercise2Tests():
     try:
+        # Generate random ID
         randId = str(uuid4())
 
         chat = Exercise2__Chat()
 
+        # Send the ID to GPT in the first message
         res1 = chat.sendMessage(f'Hello! Remember this code and respond with just "Remembered": {randId}')
 
         if (not isinstance(res1, str)):
             raise Exception("Response is not a string. Recieved: ", res1)
 
+        # Ask for the ID again in the second message
         res2 = chat.sendMessage(f'What was the code again?')
 
+        # If the history was correctly set up, the id should be in the second response
         if (not randId in res2):
             raise Exception("Incorrect response recieved: ", res2)
 
@@ -115,6 +133,7 @@ def exercise2Tests():
 @app.route('/exercise3', methods=['POST'])
 def exercise3():
     try:
+        # Get request body
         data = request.get_json()
         system_msg = data.get('systemMessage')
         messages = data.get('messages')
@@ -122,14 +141,24 @@ def exercise3():
         if system_msg == None or messages == None:
             raise Exception('No message provided in request body.')
 
+        # Initialize exercise class with system message
         chat = Exercise3__Chat(system_msg)
-        chat.messages += messages[:-1]
+
+        # Load chat history
+        for message in messages[:-1]:
+            if (message['role'] == 'assistant'):
+                chat.addAIMessasge(message['content'])
+            if (message['role'] == 'user'):
+                chat.addUserMessasge(message['content'])
+
+        # Send latest user message
         res = chat.sendMessage(messages[-1].get('content'))
 
         if (not isinstance(res, str)):
             raise Exception("Response is not a string. Recieved: ", res)
 
-        return { 'messages': chat.messages[1:] if system_msg else chat.messages }
+        # Return only chat messages (not including the system message)
+        return { 'messages': chat.getChatMessages() }
     except Exception as e:
         print(f"Error running exercise 3: {e}")
         return {}
@@ -137,14 +166,20 @@ def exercise3():
 @app.route('/exercise3/run-tests')
 def exercise3Tests():
     try:
+        # Generate a random ID
         randId = str(uuid4())
+
+        # Declare a system message that prompts GPT to include the ID in each response
         system_msg = f"You are a droid, and you end off every message with -{randId}"
+
+        # Initialize exercise class instance with the custom system message
         chat = Exercise3__Chat(system_msg)
         res = chat.sendMessage('Hello!')
 
         if (not isinstance(res, str)):
             raise Exception("Response is not a string. Recieved: ", res)
 
+        # If the system message was implemented correctly, ID should be in response
         if (not randId in res):
             raise Exception("Incorrect response recieved: ", res)
 
@@ -156,12 +191,16 @@ def exercise3Tests():
 @app.route('/exercise4/<maze_code>')
 def exercise4(maze_code: str):
     try:
+        # Declare an exercise 3 instance with students' exercise 4 system message
         chat = Exercise3__Chat(Exercise4__system_msg)
+
+        # Send the maze code to GPT
         res = chat.sendMessage(maze_code)
 
         if (not isinstance(res, str)):
             raise Exception("Response is not a string. Recieved: ", res)
 
+        # Return GPT's response instructions, split by newline
         return { 'instructions': res.splitlines() }
     except Exception as e:
         print(f"Error running exercise 4: {e}")
@@ -170,15 +209,22 @@ def exercise4(maze_code: str):
 @app.route('/exercise4/run-tests')
 def exercise4Tests():
     try:
+        # Generate a random maze code
         maze_code = f'\\instr -R {randint(0, 4)} -U {randint(0, 2)} -L {randint(0, 5)}'
+
+        # Declare an exercise 3 instance with students' exercise 4 system message
         chat = Exercise3__Chat(Exercise4__system_msg)
+
+        # Send the generated maze code to GPT
         res = chat.sendMessage(maze_code)
 
         if (not isinstance(res, str)):
             raise Exception("Response is not a string. Recieved: ", res)
         
+        # Split the instructions by newline
         instructions = res.splitlines()
 
+        # Generate a maze code from the instructions in the response
         generated_maze_code = '\\instr'
         for instruction in instructions:
             split_instruction = instruction.split(' ')
@@ -190,6 +236,7 @@ def exercise4Tests():
 
             generated_maze_code += f" -{direction[0].upper()} {steps}"
 
+        # Expect the maze code generated from instructions to equal the original one
         if not generated_maze_code == maze_code:
             raise Exception(f"Generated code: {generated_maze_code} does not match maze code: {maze_code}")
         
@@ -198,12 +245,10 @@ def exercise4Tests():
         print(f"Failed exercise 4 tests: {e}")
         return { 'success': False }
 
+# Hello world route for debugging
 @app.route('/')
 def helloWorld():
-    response = make_response({ 'success': True  })
-    response.set_cookie(key='bex-exercise4', value='true', domain="localhost")
-
-    return response
+    return "Hello world!"
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=4200)

@@ -28,3 +28,6 @@ system_msg = """
     the instruction set (and as a result your output that depends on it) will vary every time. 
     When prompted with an instruction set, respond with only the instructions, nothing else.
 """
+
+if __name__ == '__main__':
+	print("Exercise 4 optional test area.")

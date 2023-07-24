@@ -4,6 +4,9 @@ from dotenv import load_dotenv; load_dotenv()
 # Fetch environment variables from .env
 import os
 
+# Typings are good practice to know what your code is producing
+from typing import List
+
 # OpenAI Python SDK to allow us to make requests to GPT
 import openai
 
@@ -15,10 +18,19 @@ class Chat:
 		self.messages = []
 
 		if (system_msg):
-			self.messages.append({'role': 'system', 'content': system_msg})
+			self.addSystemMessage(system_msg)
+
+	def addSystemMessage(self, message: str) -> None:
+		self.messages.append({'role': 'system', 'content': message})
+
+	def addUserMessasge(self, message: str) -> None:
+		self.messages.append({'role': 'user', 'content': message})
+
+	def addAIMessasge(self, message: str) -> None:
+		self.messages.append({'role': 'assistant', 'content': message})
 
 	def sendMessage(self, message: str) -> str:
-		self.messages.append({'role': 'user', 'content': message})
+		self.addUserMessasge(message)
 
 		res = openai.ChatCompletion.create(
 			model='gpt-3.5-turbo-16k',
@@ -27,9 +39,19 @@ class Chat:
 		)
 
 		message = res['choices'][0]['message']['content']
-		self.messages.append({'role': 'assistant', 'content': message})
+		
+		self.addAIMessasge(message)
 
 		return message
+	
+	def getChatMessages(self) -> List:
+		chatMessages = []
+
+		for message in self.messages:
+			if message['role'] != 'system':
+				chatMessages.append(message)
+		
+		return chatMessages
 
 if __name__ == '__main__':
-	print("Exercise 2 optional test area.")
+	print("Exercise 3 optional test area.")

@@ -20,6 +20,5 @@ To be able to run this app locally, you will need both Docker and Git installed 
 ## Quick start
 
 1. **Clone the app:** Run `git clone https://github.com/ralphr123/bam-workshop && cd bam-workshop`
-2. **Build the app:** In your project directory root, run `docker build --no-cache --progress=plain --build-arg PASSPHRASE="<passphrase>" -t beximage . && docker create --name bexcontainer beximage`
-3. **Run the app:** Run `docker start -i bexconainter`
-4. **Stop the app:** CTRL + C in the terminal window where the app is running
+2. **Run the app:** In your project directory root, run `export PASSPHRASE=rqwP4R6s3DsUtEZm4Hle1A== && docker-compose up`
+3. **Stop the app:** CTRL + C in the terminal window where the app is running

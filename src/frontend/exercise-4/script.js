@@ -80,7 +80,6 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
             break;
         }
       } catch (e) {
-        console.log("ERROR");
         $mazeFailIndicator.classList.remove("hidden");
         $responseArea.innerText = "";
 
@@ -105,7 +104,6 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
       spriteImageUrl: "https://pixijs.com/assets/bunny.png",
       elementIdToInject: "pixi-container",
       onSuccess: () => {
-        console.log("sijdj");
         const $mazeSuccessIndicator = document.getElementById(
           "maze-success-indicator"
         );

@@ -5,7 +5,7 @@ import sys; sys.dont_write_bytecode = True
 from dotenv import load_dotenv; load_dotenv()
 
 # Flask is used to accept HTTP requests
-from flask import Flask, request, make_response
+from flask import Flask, request
 
 # To generate random strings
 from uuid import uuid4

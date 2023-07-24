@@ -15,10 +15,12 @@ def printToConsole(*args, sep=' ', end='\n'):
     print(*args, sep=sep, end=end, flush=True)
 
 
+# ===========================
 # Welcome! This is the part of the file where you'll be writing your code.
 # Feel free to add to it and experiment, but altering the starter code is not recommended.
 # Make sure to read the comments carefully!
 # Don't hesitate to ask for help if you're stuck. Happy coding!
+# ===========================
 
 # ===========================
 # === MODIFY THIS SECTION ===

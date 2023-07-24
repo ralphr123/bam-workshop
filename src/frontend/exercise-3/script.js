@@ -1,11 +1,13 @@
 import { callBackend } from "../_lib/callBackend.js";
 import { handleRunTests } from "../_lib/handleRunTests.js";
+import { randomPrompts } from "../_lib/randomPrompts.js";
 
 (async () => {
   const $inputField = document.getElementsByTagName("input")[0];
   const $sendBtn = document.getElementById("send-btn");
   const $responseArea = document.getElementById("response-area");
   const $promptTextarea = document.getElementsByTagName("textarea")[0];
+  const $randomizeBtn = document.querySelector("#prompt-box > button");
   // const $openaiLogo = document.getElementById("openai-logo");
 
   let messages = [];
@@ -16,12 +18,26 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
     }
   });
 
-  $sendBtn.addEventListener("click", (e) => {
+  $sendBtn.addEventListener("click", () => {
     if ($inputField.value) {
       sendMessage($inputField.value);
     }
   });
 
+  $randomizeBtn.addEventListener("click", randomizePrompt);
+
+  /**
+   * Insert random pre-generated prompt into prompt area
+   */
+  async function randomizePrompt() {
+    const i = Math.floor(Math.random() * randomPrompts.length);
+    $promptTextarea.innerText = randomPrompts[i];
+  }
+
+  /**
+   * Send message to GPT and populate DOM with response
+   * @param {string} message
+   */
   async function sendMessage(message) {
     $inputField.disabled = true;
     // $openaiLogo.classList.add("rotating");
@@ -44,12 +60,11 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
 
     messages = data?.messages || messages;
 
-    console.log(data);
-
     // $openaiLogo.classList.remove("rotating");
     loadMessages(messages);
     $inputField.value = "";
     $inputField.disabled = false;
+    $inputField.focus();
   }
 
   /**

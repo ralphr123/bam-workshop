@@ -3,7 +3,7 @@ body > div {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 h2 span {
@@ -46,6 +46,15 @@ h2 span {
   outline: none;
   color: white;
   border: none;
+  resize: none;
+}
+
+#prompt-box > button {
+  background-color: #00a4ef;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
 }
 
 #chat-box {

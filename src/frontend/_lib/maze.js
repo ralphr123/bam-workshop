@@ -4,9 +4,20 @@ import { generateRandomMaze } from "./generateRandomMaze.js";
 export class Maze {
   /**
    *
-   * @param {{ mazeDimensions: number; spriteImageUrl: string; elementIdToInject: string; }}
+   * @param {{
+   *  mazeDimensions: number;
+   *  spriteImageUrl: string;
+   *  elementIdToInject: string;
+   *  onFail?: () => void;
+   *  onSuccess?: () => void
+   * }}
    */
-  constructor({ mazeDimensions, spriteImageUrl, elementIdToInject }) {
+  constructor({
+    mazeDimensions,
+    spriteImageUrl,
+    elementIdToInject,
+    onSuccess,
+  }) {
     const $pixiContainer = document.getElementById(elementIdToInject);
 
     // Clear any existing content from DOM element
@@ -32,6 +43,9 @@ export class Maze {
 
     // Generate pixi sprite with correct size and coordinates
     this.sprite = this.generateSprite(spriteImageUrl);
+
+    // Handlers
+    this.onSuccess = onSuccess;
 
     // Add app to dom
     $pixiContainer.appendChild(this.app.view);
@@ -67,6 +81,7 @@ export class Maze {
   drawMaze() {
     try {
       const cellSize = this.app.view.width / this.grid.length;
+      this.walls = [];
 
       for (let i = 0; i < this.grid.length; i++) {
         for (let j = 0; j < this.grid[i].length; j++) {
@@ -81,10 +96,6 @@ export class Maze {
 
           let cellColor = "black";
 
-          if (cell === 2) {
-            cellColor = "blue";
-          }
-
           // Fill cell with correct color
           domCell.beginFill(cellColor);
           domCell.drawRect(0, 0, cellSize, cellSize);
@@ -96,6 +107,11 @@ export class Maze {
 
           // Add cell to app
           this.app.stage.addChild(domCell);
+
+          // Add to walls array for collision detection
+          if (cellColor === "black") {
+            this.walls.push(domCell); // Add this line
+          }
         }
       }
     } catch (e) {
@@ -111,23 +127,34 @@ export class Maze {
    */
   moveSprite(x, y) {
     try {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         const cellSize = this.app.view.width / this.grid.length;
         const targetX = Math.round(x * cellSize);
         const targetY = Math.round(y * cellSize);
 
-        // 27 26.19047619047619 26.19047619047619 26.19047619047619
         // Callback to animate sprite's motion
         const animateMotion = () => {
-          // console.log(this.sprite.x, this.sprite.y, targetX, targetY);
           try {
+            if (this.isSpriteOutOfBounds()) {
+              reject("Out of bounds");
+              this.app.ticker.remove(animateMotion);
+              return;
+            }
+
+            this.isSpriteOutOfBounds();
+
+            // Move sprite
             if (this.sprite.x !== targetX) {
-              // console.log("hello");
               this.sprite.x += this.sprite.x < targetX ? 1 : -1;
             } else if (this.sprite.y !== targetY) {
               this.sprite.y += this.sprite.y < targetY ? 1 : -1;
             } else {
               this.app.ticker.remove(animateMotion);
+
+              if (this.isSpriteAtFinish()) {
+                this.onSuccess?.();
+              }
+
               resolve();
             }
           } catch (e) {
@@ -183,5 +210,36 @@ export class Maze {
     // Reset coordinates on DOM
     this.sprite.x = Math.round(this.spriteCoordinates.x * cellSize);
     this.sprite.y = Math.round(this.spriteCoordinates.y * cellSize);
+  }
+
+  /**
+   * @returns {boolean} True if sprite is in a wall or out of bounds
+   */
+  isSpriteOutOfBounds() {
+    const cellSize = this.app.view.width / this.grid.length;
+    const x = Math.floor(this.sprite.x / cellSize);
+    const y = Math.floor(this.sprite.y / cellSize);
+
+    for (let i = 0; i < this.walls.length; i++) {
+      const wall = this.walls[i];
+      const wallBounds = wall.getBounds();
+
+      if (wallBounds.contains(this.sprite.x, this.sprite.y)) {
+        return true;
+      }
+    }
+
+    return x < 0 || y < 0 || x >= this.grid.length || y >= this.grid.length;
+  }
+
+  /**
+   * @returns {boolean} True if sprite has successfully completed maze
+   */
+  isSpriteAtFinish() {
+    const cellSize = this.app.view.width / this.grid.length;
+    const x = Math.floor(this.sprite.x / cellSize);
+    const y = Math.floor(this.sprite.y / cellSize);
+
+    return x >= this.grid.length - 2 && y >= this.grid.length - 2;
   }
 }

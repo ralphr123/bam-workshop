@@ -62,32 +62,76 @@ h1 .rainbow {
 .exercise-btns a {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
-.exercise-btns a div {
-  height: 7rem;
-  width: 7rem;
+.exercise-btns > a > div {
+  height: 6.25rem;
+  width: 6.25rem;
   border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: white;
   font-size: 2em;
   cursor: pointer;
+  background-color: #9a9a9a;
+  opacity: 0.5;
 }
 
-.exercise-btns :nth-child(1) div {
+.exercise-btns > a > div.pending,
+.exercise-btns > a > div.success {
+  height: 7rem;
+  width: 7rem;
+  opacity: 1;
+  border: 3px solid;
+}
+
+.exercise-btns > a > div.pending {
+  background-color: transparent;
+  margin-right: 7px;
+}
+
+.exercise-btns > a > div.success {
+  color: black;
+}
+
+#exercise-1.pending {
+  border-color: #f25022;
+}
+
+#exercise-1.success {
+  border-color: #f25022;
   background-color: #f25022;
 }
 
-.exercise-btns :nth-child(2) div {
+#exercise-2.pending {
+  border-color: #7fba00;
+}
+
+#exercise-2.success {
+  border-color: #7fba00;
   background-color: #7fba00;
 }
 
-.exercise-btns :nth-child(3) div {
+#exercise-3.pending {
+  border-color: #00a4ef;
+}
+
+#exercise-3.success {
+  border-color: #00a4ef;
   background-color: #00a4ef;
 }
 
-.exercise-btns :nth-child(4) div {
+#exercise-4.pending {
+  border-color: #ffb900;
+}
+
+#exercise-4.success {
+  border-color: #ffb900;
   background-color: #ffb900;
+}
+
+.disabled {
+  pointer-events: none;
 }

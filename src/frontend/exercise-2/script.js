@@ -46,6 +46,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
     loadMessages(messages);
     $inputField.value = "";
     $inputField.disabled = false;
+    $inputField.focus();
   }
 
   /**

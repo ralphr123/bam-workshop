@@ -2,10 +2,13 @@
 from dotenv import load_dotenv; load_dotenv()
 
 # Flask is used to accept HTTP requests
-from flask import Flask, request
+from flask import Flask, request, make_response
 
 # To generate random strings
 from uuid import uuid4
+
+# To generate random numbers
+from random import randint
 
 # Import exercise modules
 from _EDIT_THESE_FILES.exercise1 import sendMessage as Exercise1__sendMessage
@@ -19,7 +22,7 @@ app = Flask(__name__)
 @app.after_request
 def afterRequest(response):
     header = response.headers
-    header['Access-Control-Allow-Origin'] = 'http://localhost:3000'
+    header['Access-Control-Allow-Origin'] = '*'
     header['Access-Control-Allow-Headers'] = '*'
     return response
 
@@ -57,7 +60,7 @@ def exercise1Tests():
         if (not randId in res):
             raise Exception("Incorrect response recieved: ", res)
 
-        return { 'success': True }
+        return { 'success': True  }
     except Exception as e:
         print(f"Failed exercise 1 tests: {e}")
         return { 'success': False }
@@ -102,9 +105,9 @@ def exercise2Tests():
         if (not randId in res2):
             raise Exception("Incorrect response recieved: ", res2)
 
-        return { 'success': True }
+        return { 'success': True  }
     except Exception as e:
-        print(f"Failed exercise 1 tests: {e}")
+        print(f"Failed exercise 2 tests: {e}")
         return { 'success': False }
 
 # EXERCISE 3
@@ -126,19 +129,17 @@ def exercise3():
         if (not isinstance(res, str)):
             raise Exception("Response is not a string. Recieved: ", res)
 
-        return { 'messages': chat.messages[1:] }
+        return { 'messages': chat.messages[1:] if system_msg else chat.messages }
     except Exception as e:
-        print(f"Error running exercise 2: {e}")
+        print(f"Error running exercise 3: {e}")
         return {}
     
 @app.route('/exercise3/run-tests')
 def exercise3Tests():
     try:
         randId = str(uuid4())
-
         system_msg = f"You are a droid, and you end off every message with -{randId}"
         chat = Exercise3__Chat(system_msg)
-
         res = chat.sendMessage('Hello!')
 
         if (not isinstance(res, str)):
@@ -147,34 +148,62 @@ def exercise3Tests():
         if (not randId in res):
             raise Exception("Incorrect response recieved: ", res)
 
-        return { 'success': True }
+        return { 'success': True  }
     except Exception as e:
-        print(f"Failed exercise 1 tests: {e}")
+        print(f"Failed exercise 3 tests: {e}")
         return { 'success': False }
 
 @app.route('/exercise4/<maze_code>')
 def exercise4(maze_code: str):
     try:
         chat = Exercise3__Chat(Exercise4__system_msg)
-
         res = chat.sendMessage(maze_code)
+
+        if (not isinstance(res, str)):
+            raise Exception("Response is not a string. Recieved: ", res)
 
         return { 'instructions': res.splitlines() }
     except Exception as e:
-        print(f"Error running exercise 2: {e}")
+        print(f"Error running exercise 4: {e}")
         return {}
     
 @app.route('/exercise4/run-tests')
 def exercise4Tests():
     try:
-        return { 'success': False }
+        maze_code = f'\\instr -R {randint(0, 4)} -U {randint(0, 2)} -L {randint(0, 5)}'
+        chat = Exercise3__Chat(Exercise4__system_msg)
+        res = chat.sendMessage(maze_code)
+
+        if (not isinstance(res, str)):
+            raise Exception("Response is not a string. Recieved: ", res)
+        
+        instructions = res.splitlines()
+
+        generated_maze_code = '\\instr'
+        for instruction in instructions:
+            split_instruction = instruction.split(' ')
+
+            if not len(split_instruction) == 4:
+                raise Exception(f"Malformed instructions, recieved: {instructions}")
+
+            _, direction, steps, _ = split_instruction
+
+            generated_maze_code += f" -{direction[0].upper()} {steps}"
+
+        if not generated_maze_code == maze_code:
+            raise Exception(f"Generated code: {generated_maze_code} does not match maze code: {maze_code}")
+        
+        return { 'success': True  }
     except Exception as e:
-        print(f"Error running exercise 1: {e}")
+        print(f"Failed exercise 4 tests: {e}")
         return { 'success': False }
 
 @app.route('/')
 def helloWorld():
-    return { 'text': 'Hello world!' }
+    response = make_response({ 'success': True  })
+    response.set_cookie(key='bex-exercise4', value='true', domain="localhost")
+
+    return response
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port=4200)

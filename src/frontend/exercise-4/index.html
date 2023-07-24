@@ -10,21 +10,44 @@
   </head>
   <body>
     <div>
-      <div id="chat-box" class="dogica">
+      <h2 class="pixel"><span>Exercise 4:</span> Bunny</h2>
+      <h3>Try your code!</h3>
+      <div id="chat-container">
         <div>
-          <div id="response-area"></div>
-          <img src="../static/image/logo-openai.png" />
-        </div>
-        <div>
-          <input type="text" disabled />
-          <div>
-            <img id="send-btn" src="../static/assets/icons/send.svg" />
+          <div id="chat-box" class="dogica">
+            <div>
+              <div id="response-area"></div>
+              <img src="../static/image/logo-openai.png" />
+            </div>
+            <div>
+              <input type="text" disabled />
+              <div>
+                <img id="send-btn" src="../static/assets/icons/send.svg" />
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <div id="maze-container">
-        <div id="pixi-container"></div>
-        <div id="maze-code-plaque" class="dogica"></div>
+        <div id="maze-container">
+          <div id="level-btns">
+            <button id="small-btn">Small</button>
+            <button id="medium-btn">Medium</button>
+            <button id="large-btn">Large</button>
+          </div>
+          <div id="canvas-container">
+            <img
+              src="../static/assets/icons/cross.svg"
+              id="maze-error-indicator"
+              class="hidden"
+            />
+            <img
+              src="../static/assets/icons/check-circle.svg"
+              id="maze-success-indicator"
+              class="hidden"
+            />
+            <div id="pixi-container"></div>
+          </div>
+          <div id="maze-code-plaque" class="dogica"></div>
+        </div>
       </div>
     </div>
     <button id="run-tests-btn" class="dogica">

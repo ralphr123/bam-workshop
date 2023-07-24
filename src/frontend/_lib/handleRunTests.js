@@ -20,7 +20,14 @@ export function handleRunTests(exercise) {
 
   // Set initial state of play button
   let status = "ready";
-  $runTestsBtn.innerHTML = _playContent;
+
+  if (window.localStorage.getItem(`bex-${exercise}`)) {
+    $runTestsBtn.classList.add("success");
+    $runTestsBtn.innerHTML = _successContent;
+    $runTestsBtn.disabled = true;
+  } else {
+    $runTestsBtn.innerHTML = _playContent;
+  }
 
   $runTestsBtn.addEventListener("click", () => {
     if (status === "ready") runTests();
@@ -59,15 +66,14 @@ export function handleRunTests(exercise) {
         break;
     }
 
-    console.log(data);
-
     if (data.success) {
       $runTestsBtn.classList.add("success");
       $runTestsBtn.innerHTML = _successContent;
       $runTestsBtn.disabled = true;
+
+      window.localStorage.setItem(`bex-${exercise}`, "true");
     } else {
       $runTestsBtn.classList.add("fail");
-      // Replace play button content with reset icon
       $runTestsBtn.innerHTML = _resetContent;
     }
 

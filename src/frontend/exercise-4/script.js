@@ -3,22 +3,43 @@ import { Maze } from "../_lib/maze.js";
 import { handleRunTests } from "../_lib/handleRunTests.js";
 
 (async () => {
-  const maze = new Maze({
-    mazeDimensions: 8,
-    spriteImageUrl: "https://pixijs.com/assets/bunny.png",
-    elementIdToInject: "pixi-container",
-  });
-
-  // Put maze code inside plaque
-  document.getElementById("maze-code-plaque").innerText = maze.mazeCode;
-
   const $sendBtn = document.getElementById("send-btn");
   const $input = document.getElementsByTagName("input")[0];
   const $responseArea = document.getElementById("response-area");
+  const $smallBtn = document.getElementById("small-btn");
+  const $mediumBtn = document.getElementById("medium-btn");
+  const $largeBtn = document.getElementById("large-btn");
+  const $mazeCodePlaque = document.getElementById("maze-code-plaque");
+  const $mazeFailIndicator = document.getElementById("maze-error-indicator");
+  const $mazeSuccessIndicator = document.getElementById(
+    "maze-success-indicator"
+  );
 
+  let maze = new Maze({
+    mazeDimensions: 5,
+    spriteImageUrl: "https://pixijs.com/assets/bunny.png",
+    elementIdToInject: "pixi-container",
+    // Show success indicator if sprite finished maze
+    onSuccess: () => {
+      const $mazeSuccessIndicator = document.getElementById(
+        "maze-success-indicator"
+      );
+
+      $mazeSuccessIndicator.classList.remove("hidden");
+    },
+  });
+
+  // Send button is for testing code implementation in visual maze
+  $sendBtn.addEventListener("click", send);
+
+  // Put maze code inside plaque and input fields
+  $mazeCodePlaque.innerText = maze.mazeCode;
   $input.value = maze.mazeCode;
 
-  $sendBtn.addEventListener("click", send);
+  // Add event listeners for change level buttons
+  $smallBtn.addEventListener("click", () => loadNewMaze(5));
+  $mediumBtn.addEventListener("click", () => loadNewMaze(10));
+  $largeBtn.addEventListener("click", () => loadNewMaze(20));
 
   async function send() {
     // Fetch exercise data
@@ -32,29 +53,72 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
 
     // Follow recieved maze instructions
     for (const instruction of instructions) {
-      $responseArea.innerText += instruction + "\n";
-      const instructionFragments = instruction.split(" ");
+      try {
+        $responseArea.innerText += `GPT: ${instruction}\n`;
+        const instructionFragments = instruction.split(" ");
 
-      if (instructionFragments.length !== 4) {
-        continue;
-      }
-      const [, direction, steps] = instructionFragments;
+        if (instructionFragments.length !== 4) {
+          continue;
+        }
+        const [, direction, steps] = instructionFragments;
 
-      switch (direction) {
-        case "RIGHT":
-          await maze.moveSpriteX(Number(steps));
-          break;
-        case "LEFT":
-          await maze.moveSpriteX(-Number(steps));
-          break;
-        case "UP":
-          await maze.moveSpriteY(-Number(steps));
-          break;
-        case "DOWN":
-          await maze.moveSpriteY(Number(steps));
-          break;
+        switch (direction) {
+          case "RIGHT":
+            await maze.moveSpriteX(Number(steps));
+            break;
+          case "LEFT":
+            await maze.moveSpriteX(-Number(steps));
+            break;
+          case "UP":
+            await maze.moveSpriteY(-Number(steps));
+            break;
+          case "DOWN":
+            await maze.moveSpriteY(Number(steps));
+            break;
+        }
+      } catch (e) {
+        console.log("ERROR");
+        $mazeFailIndicator.classList.remove("hidden");
+        $responseArea.innerText = "";
+
+        setTimeout(() => {
+          $mazeFailIndicator.classList.add("hidden");
+          maze.resetSprite();
+        }, 3000);
       }
     }
+  }
+
+  /**
+   * Load new maze with specific dimensions onto DOM
+   * @param {number} mazeDimensions
+   */
+  function loadNewMaze(mazeDimensions) {
+    // Reset maze and bunny position
+    maze = new Maze({
+      mazeDimensions,
+      spriteImageUrl: "https://pixijs.com/assets/bunny.png",
+      elementIdToInject: "pixi-container",
+      onSuccess: () => {
+        console.log("sijdj");
+        const $mazeSuccessIndicator = document.getElementById(
+          "maze-success-indicator"
+        );
+
+        $mazeSuccessIndicator.classList.remove("hidden");
+      },
+    });
+
+    // Put maze code inside plaque and input fields
+    $mazeCodePlaque.innerText = maze.mazeCode;
+    $input.value = maze.mazeCode;
+
+    // Clear GPT response area
+    $responseArea.innerText = "";
+
+    // Remove fail/success indicators
+    $mazeSuccessIndicator.classList.add("hidden");
+    $mazeFailIndicator.classList.add("hidden");
   }
 
   handleRunTests("exercise4");

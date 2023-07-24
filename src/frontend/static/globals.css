@@ -17,6 +17,23 @@ body > div {
   margin: auto 0;
 }
 
+/* BACK BUTTON FOR RETURNING TO MAIN PAGE */
+#back-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  padding: 0.5rem 0.75rem;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+#back-btn > img {
+  height: 1.5rem;
+}
+
 /* PLAY BUTTON FOR TESTING */
 #run-tests-btn {
   position: fixed;

@@ -10,14 +10,28 @@
   </head>
   <body>
     <div>
+      <!-- BACK BTN -->
+      <button
+        id="back-btn"
+        class="dogica"
+        onclick="window.location.pathname = '/'"
+      >
+        <img src="../static/assets/icons/back.svg" />
+        Back
+      </button>
+
+      <!-- TEST AREA -->
       <h2 class="pixel"><span>Exercise 3:</span> Conversation + prompt</h2>
       <h3>Try your code!</h3>
       <div id="chat-container">
+        <!-- Prompt area -->
         <div id="prompt-box">
           <div>Prompt area</div>
           <textarea placeholder="Type here..."></textarea>
           <button>Randomize</button>
         </div>
+
+        <!-- Chat area -->
         <div id="chat-box" class="dogica">
           <div>
             <div id="response-area"></div>
@@ -32,8 +46,11 @@
         </div>
       </div>
     </div>
+
+    <!-- RUN TESTS BUTTON -->
     <button id="run-tests-btn" class="dogica"></button>
-    <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.x/dist/pixi.min.js"></script>
+
+    <!-- CUSTOM SCRIPT -->
     <script type="module" src="script.js"></script>
   </body>
 </html>

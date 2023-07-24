@@ -9,11 +9,24 @@
     <link rel="stylesheet" href="../static/globals.css" />
   </head>
   <body>
+    <!-- BACK BTN -->
+    <button
+      id="back-btn"
+      class="dogica"
+      onclick="window.location.pathname = '/'"
+    >
+      <img src="../static/assets/icons/back.svg" />
+      Back
+    </button>
+
+    <!-- TEST AREA -->
     <div>
       <h2 class="pixel"><span>Exercise 4:</span> Bunny</h2>
       <h3>Try your code!</h3>
+
       <div id="chat-container">
         <div>
+          <!-- Chat area -->
           <div id="chat-box" class="dogica">
             <div>
               <div id="response-area"></div>
@@ -27,6 +40,8 @@
             </div>
           </div>
         </div>
+
+        <!-- Maze area -->
         <div id="maze-container">
           <div id="level-btns">
             <button id="small-btn">Small</button>
@@ -50,11 +65,14 @@
         </div>
       </div>
     </div>
-    <button id="run-tests-btn" class="dogica">
-      <img src="../static/assets/icons/play.svg" />
-      <div>Run Tests</div>
-    </button>
+
+    <!-- RUN TESTS BUTTON -->
+    <button id="run-tests-btn" class="dogica"></button>
+
+    <!-- PIXI.JS SCRIPT - used for maze animations -->
     <script src="https://cdn.jsdelivr.net/npm/pixi.js@7.x/dist/pixi.min.js"></script>
+
+    <!-- CUSTOM SCRIPT -->
     <script type="module" src="script.js"></script>
   </body>
 </html>

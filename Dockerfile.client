@@ -1,9 +1,17 @@
-FROM python:3.9-slim
+# Use an official lightweight Node.js runtime as the base image
+FROM node:14-alpine
 
+# Set the working directory in the Docker container
 WORKDIR /app
 
+# Copy only the necessary directories
 COPY . .
 
+# Install http-server globally
+RUN npm install -g http-server
+
+# Expose port 3000
 EXPOSE 3000
 
-CMD ["python", "-m", "http.server", "3000", "--directory", "./src/frontend"]
+# Start the server
+CMD ["http-server", "./src/frontend", "-p", "3000"]

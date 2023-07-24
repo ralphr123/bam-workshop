@@ -1,3 +1,6 @@
+# No __pycache__ folder in edit directory to prevent confusion
+import sys; sys.dont_write_bytecode = True
+
 # Load environment variables
 from dotenv import load_dotenv; load_dotenv()
 

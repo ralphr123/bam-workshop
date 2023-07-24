@@ -46,7 +46,7 @@ def exercise1():
 
         return { 'response': res }
     except Exception as e:
-        print(f"Error running exercise 1: {e}")
+        print(f"Error running exercise 1: {e}", flush=True)
         return {}
 
 @app.route('/exercise1/run-tests')
@@ -67,7 +67,7 @@ def exercise1Tests():
 
         return { 'success': True  }
     except Exception as e:
-        print(f"Failed exercise 1 tests: {e}")
+        print(f"Failed exercise 1 tests: {e}", flush=True)
         return { 'success': False }
 
 # EXERCISE 2
@@ -99,7 +99,7 @@ def exercise2():
 
         return { 'messages': chat.messages }
     except Exception as e:
-        print(f"Error running exercise 2: {e}")
+        print(f"Error running exercise 2: {e}", flush=True)
         return {}
 
 @app.route('/exercise2/run-tests')
@@ -125,7 +125,7 @@ def exercise2Tests():
 
         return { 'success': True  }
     except Exception as e:
-        print(f"Failed exercise 2 tests: {e}")
+        print(f"Failed exercise 2 tests: {e}", flush=True)
         return { 'success': False }
 
 # EXERCISE 3
@@ -160,7 +160,7 @@ def exercise3():
         # Return only chat messages (not including the system message)
         return { 'messages': chat.getChatMessages() }
     except Exception as e:
-        print(f"Error running exercise 3: {e}")
+        print(f"Error running exercise 3: {e}", flush=True)
         return {}
     
 @app.route('/exercise3/run-tests')
@@ -185,7 +185,7 @@ def exercise3Tests():
 
         return { 'success': True  }
     except Exception as e:
-        print(f"Failed exercise 3 tests: {e}")
+        print(f"Failed exercise 3 tests: {e}", flush=True)
         return { 'success': False }
 
 @app.route('/exercise4/<maze_code>')
@@ -203,7 +203,7 @@ def exercise4(maze_code: str):
         # Return GPT's response instructions, split by newline
         return { 'instructions': res.splitlines() }
     except Exception as e:
-        print(f"Error running exercise 4: {e}")
+        print(f"Error running exercise 4: {e}", flush=True)
         return {}
     
 @app.route('/exercise4/run-tests')
@@ -242,7 +242,7 @@ def exercise4Tests():
         
         return { 'success': True  }
     except Exception as e:
-        print(f"Failed exercise 4 tests: {e}")
+        print(f"Failed exercise 4 tests: {e}", flush=True)
         return { 'success': False }
 
 # Hello world route for debugging

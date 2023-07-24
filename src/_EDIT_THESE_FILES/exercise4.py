@@ -1,3 +1,15 @@
+# Use this function to print to the console for debugging
+def printToConsole(*args, sep=' ', end='\n'):
+    print(*args, sep=sep, end=end, flush=True)
+
+# ===========================
+# === MODIFY THIS SECTION ===
+# ===========================
+
+# For this exercise, you need only to modify the below prompt that
+# will be sent to GPT using your class from exericse3.py
+# This prompt will help GPT decode the maze instructions sent to it
+
 system_msg = """
     You are an assistant that helps Donny the bunny get through a maze to the destination. 
     At the entrance of each maze, there is a relic that contains a cryptic instruction set.
@@ -28,6 +40,3 @@ system_msg = """
     the instruction set (and as a result your output that depends on it) will vary every time. 
     When prompted with an instruction set, respond with only the instructions, nothing else.
 """
-
-if __name__ == '__main__':
-	print("Exercise 4 optional test area.")

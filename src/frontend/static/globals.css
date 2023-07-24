@@ -21,6 +21,18 @@ img {
   pointer-events: none;
 }
 
+#openai-chat-logo {
+  display: block;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  height: 50%;
+  opacity: 0.05;
+}
+
 /* BACK BUTTON FOR RETURNING TO MAIN PAGE */
 #back-btn {
   display: flex;

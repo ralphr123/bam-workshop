@@ -10,6 +10,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
   const $mediumBtn = document.getElementById("medium-btn");
   const $largeBtn = document.getElementById("large-btn");
   const $mazeCodePlaque = document.getElementById("maze-code-plaque");
+  const $openaiLogo = document.getElementById("openai-chat-logo");
   const $mazeFailIndicator = document.getElementById("maze-error-indicator");
   const $mazeSuccessIndicator = document.getElementById(
     "maze-success-indicator"
@@ -42,6 +43,8 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
   $largeBtn.addEventListener("click", () => loadNewMaze(20));
 
   async function send() {
+    $openaiLogo.classList.add("rotating");
+
     // Fetch exercise data
     const data = await callBackend({
       path: `/exercise4/${encodeURIComponent(maze.mazeCode)}`,
@@ -87,6 +90,8 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
         }, 3000);
       }
     }
+
+    $openaiLogo.classList.remove("rotating");
   }
 
   /**

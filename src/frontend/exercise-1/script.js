@@ -5,7 +5,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
   const $inputField = document.getElementsByTagName("input")[0];
   const $sendBtn = document.getElementById("send-btn");
   const $responseArea = document.getElementById("response-area");
-  // const $openaiLogo = document.getElementById("openai-logo");
+  const $openaiLogo = document.getElementById("openai-chat-logo");
 
   $inputField.addEventListener("keydown", (e) => {
     if (e.key === "Enter" && $inputField.value) {
@@ -13,7 +13,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
     }
   });
 
-  $sendBtn.addEventListener("click", (e) => {
+  $sendBtn.addEventListener("click", () => {
     if ($inputField.value) {
       sendMessage($inputField.value);
     }
@@ -21,7 +21,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
 
   async function sendMessage(message) {
     $inputField.disabled = true;
-    // $openaiLogo.classList.add("rotating");
+    $openaiLogo.classList.add("rotating");
 
     const data = await callBackend({
       method: "POST",
@@ -33,10 +33,11 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
 
     const response = data?.response || "";
 
-    // $openaiLogo.classList.remove("rotating");
+    $openaiLogo.classList.remove("rotating");
     $responseArea.innerText = response;
     $inputField.value = "";
     $inputField.disabled = false;
+    $inputField.focus();
   }
 
   handleRunTests("exercise1");

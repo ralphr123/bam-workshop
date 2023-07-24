@@ -87,16 +87,9 @@ h2 span {
   font-size: 1.05rem !important;
 }
 
-#chat-box > div:nth-child(1) > img {
-  position: absolute;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+#openai-chat-logo {
   filter: brightness(0) saturate(100%) invert(50%) sepia(78%) saturate(1027%)
     hue-rotate(43deg) brightness(104%) contrast(101%);
-  opacity: 0.05;
-  height: 50%;
 }
 
 #chat-box > div:nth-child(2) {

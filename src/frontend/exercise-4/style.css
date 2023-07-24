@@ -121,14 +121,9 @@ button {
   font-size: 1rem;
 }
 
-#chat-box > div:nth-child(1) > img {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+#openai-chat-logo {
   filter: brightness(0) saturate(100%) invert(60%) sepia(95%) saturate(5489%)
     hue-rotate(350deg) brightness(98%) contrast(93%);
-  opacity: 0.05;
 }
 
 #chat-box > div:nth-child(2) {

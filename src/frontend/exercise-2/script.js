@@ -5,7 +5,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
   const $inputField = document.getElementsByTagName("input")[0];
   const $sendBtn = document.getElementById("send-btn");
   const $responseArea = document.getElementById("response-area");
-  // const $openaiLogo = document.getElementById("openai-logo");
+  const $openaiLogo = document.getElementById("openai-chat-logo");
 
   let messages = [];
 
@@ -23,7 +23,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
 
   async function sendMessage(message) {
     $inputField.disabled = true;
-    // $openaiLogo.classList.add("rotating");
+    $openaiLogo.classList.add("rotating");
 
     messages.push(
       { role: "user", content: message },
@@ -42,7 +42,7 @@ import { handleRunTests } from "../_lib/handleRunTests.js";
 
     messages = data?.messages || messages;
 
-    // $openaiLogo.classList.remove("rotating");
+    $openaiLogo.classList.remove("rotating");
     loadMessages(messages);
     $inputField.value = "";
     $inputField.disabled = false;

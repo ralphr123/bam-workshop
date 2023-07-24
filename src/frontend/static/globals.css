@@ -17,6 +17,10 @@ body > div {
   margin: auto 0;
 }
 
+img {
+  pointer-events: none;
+}
+
 /* BACK BUTTON FOR RETURNING TO MAIN PAGE */
 #back-btn {
   display: flex;

@@ -17,10 +17,6 @@ button {
 
 /* MAZE STATUS */
 
-.hidden {
-  display: none;
-}
-
 #canvas-container {
   position: relative;
 }

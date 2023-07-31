@@ -28,8 +28,6 @@ def printToConsole(*args, sep=' ', end='\n'):
 
 # Call Azure to send the message to GPT and return the response string
 def sendMessage(message: str) -> str:
-    raise Exception("Unimplemented sendMessage in exercise 1")
-
     res = openai.ChatCompletion.create(
         model='gpt-3.5-turbo-16k',
         messages=[{'role': 'user', 'content': message}],

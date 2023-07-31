@@ -7,9 +7,6 @@ import os
 # OpenAI Python SDK to allow us to make requests to GPT
 import openai
 
-# Store OpenAI environment variable
-openai.api_key = os.getenv('OPENAI_API_KEY')
-
 # Use this function to print to the console for debugging
 def printToConsole(*args, sep=' ', end='\n'):
     print(*args, sep=sep, end=end, flush=True)
@@ -32,19 +29,18 @@ class Chat:
 
 	# Send a message to GPT and return the response string
 	def sendMessage(self, message: str) -> str:
-		# 1. Use the function you wrote to add the message to the array as a user message
+		# 1. Use the function you completed to add the message as a user message
 		self.addUserMessasge(message)
 
 		# 2. Call Azure to send the message to GPT
 		res = openai.ChatCompletion.create(
 			model='gpt-3.5-turbo-16k',
 			messages=self.messages,
-			temperature=0
 		)
 
 		message = res['choices'][0]['message']['content']
 		
-		# 3. Add the response string to the array as an AI message
+		# 3. Use the function you completed to add the response as an AI message
 		self.addAIMessasge(message)
 
 		# 4. Return the response string

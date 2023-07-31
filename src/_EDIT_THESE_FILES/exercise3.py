@@ -11,7 +11,7 @@ from typing import List
 import openai
 
 # Store OpenAI environment variable
-openai.api_key = os.getenv('OPENAI_API_KEY')
+# openai.api_key = os.getenv('OPENAI_API_KEY')
 
 # Use this function to print to the console for debugging
 def printToConsole(*args, sep=' ', end='\n'):

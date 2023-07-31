@@ -20,5 +20,5 @@ To be able to run this app locally, you will need both Docker and Git installed 
 ## Quick start
 
 1. **Clone the app:** Run `git clone https://github.com/ralphr123/bam-workshop && cd bam-workshop`
-2. **Run the app:** In your project directory root, run `export PASSPHRASE=rqwP4R6s3DsUtEZm4Hle1A== && docker-compose up`
+2. **Run the app:** In your project directory root, run `export PASSPHRASE=<passphrase> && docker-compose up`
 3. **Stop the app:** CTRL + C in the terminal window where the app is running

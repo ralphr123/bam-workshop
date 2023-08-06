@@ -31,7 +31,7 @@ class Chat:
 
 		# 2. Call Azure to send the message to GPT
 		res = openai.ChatCompletion.create(
-			model='gpt-3.5-turbo-16k',
+			engine='gpt-35-turbo',
 			messages=self.messages,
 		)
 

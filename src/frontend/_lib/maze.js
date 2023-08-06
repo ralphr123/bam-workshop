@@ -141,8 +141,6 @@ export class Maze {
               return;
             }
 
-            this.isSpriteOutOfBounds();
-
             // Move sprite
             if (this.sprite.x !== targetX) {
               this.sprite.x += this.sprite.x < targetX ? 1 : -1;

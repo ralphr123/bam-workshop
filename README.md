@@ -36,7 +36,7 @@ Every time an exercise page is opened, students will have a test area in the cen
 
 Once students successfully complete an exercise, they can go back to the home page and start the next one whenever they’re ready.
 
-![image](https://github.com/ralphr123/bex-workshop-sol/assets/29685125/920ecebd-ba6d-4dab-a502-a1210b4fbb18)
+![image](https://github.com/ralphr123/python-openai-workshop-sol/assets/29685125/756ff130-c2c1-426c-9451-b68e0fcbacb8)
 
 ## Workshop implementation
 

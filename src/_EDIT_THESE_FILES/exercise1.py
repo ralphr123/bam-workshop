@@ -19,8 +19,8 @@ import openai
 # ===========================
 
 # Set OpenAI environment variables as shown in documenation
-openai.api_type = 'azure'
 openai.api_version = '2023-05-15'
+openai.api_type = os.getenv('OPENAI_API_TYPE')
 openai.api_base = os.getenv('OPENAI_API_BASE')
 openai.api_key = os.getenv('OPENAI_API_KEY')
 

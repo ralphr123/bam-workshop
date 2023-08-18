@@ -10,13 +10,13 @@ export function handleRunTests(exercise) {
 
   // Save play button content
   const _playContent =
-    '<img src="../static/assets/icons/play.svg" /><div>Run Tests</div>';
+    '<img src="../static/icons/play.svg" /><div>Run Tests</div>';
   const _loadingContent =
-    '<img src="../static/assets/icons/gear.svg" class="rotating" />';
+    '<img src="../static/icons/gear.svg" class="rotating" />';
   const _resetContent =
-    '<img src="../static/assets/icons/reset.svg" /><div>Try again</div>';
+    '<img src="../static/icons/reset.svg" /><div>Try again</div>';
   const _successContent =
-    '<img src="../static/assets/icons/check.svg" /><div>Success</div>';
+    '<img src="../static/icons/check.svg" /><div>Success</div>';
 
   // Set initial state of play button
   let status = "ready";
